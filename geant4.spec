@@ -1,8 +1,8 @@
-### RPM external geant4 11.2.cand02
+### RPM external geant4 11.2.0
 ## INCLUDE compilation_flags
 ## INCLUDE compilation_flags_lto
 ## INCLUDE cpp-standard
-%define tag ee28eac6629f74fc60a352c488a33837b09b55a2
+%define tag 860a2b92bff1fbd70bc77cf7b43f8558634763b2
 %define branch cms/v%{realversion}
 %define github_user cms-externals
 Source: git+https://github.com/%github_user/%{n}.git?obj=%{branch}/%{tag}&export=%{n}.%{realversion}&output=/%{n}.%{realversion}-%{tag}.tgz
@@ -34,9 +34,6 @@ fi
 rm -rf ../build
 mkdir ../build
 cd ../build
-%if %{use_vecgeom}
-export VecGeom_DIR=${VECGEOM_ROOT}/lib/cmake/VecGeom 
-%endif
 
 cmake ../%{n}.%{realversion} \
   -DCMAKE_CXX_COMPILER="g++" \
@@ -53,6 +50,8 @@ cmake ../%{n}.%{realversion} \
   -DGEANT4_BUILD_BUILTIN_BACKTRACE=OFF \
 %if %{use_vecgeom}
   -DGEANT4_USE_USOLIDS="all" \
+  -DVecGeom_DIR=${VECGEOM_ROOT}/lib64/cmake/VecGeom \
+  -DVecCore_DIR=${VECGEOM_ROOT}/lib64/cmake/VecCore \
 %endif
   -DBUILD_SHARED_LIBS=ON \
   -DBUILD_STATIC_LIBS=ON \
