@@ -1,5 +1,7 @@
 #Enable/disable LTO builds
-%define enable_lto 0
+%if "%{?enable_lto:set}" != "set"
+%define enable_lto 1
+%endif
 
 #LTO related flags
 %ifarch ppc64le
